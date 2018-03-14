@@ -5,10 +5,8 @@ const cors = require('cors');
 const knex = require('knex')({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'Lillia',
-    password : 'Wanda93db',
-    database : 'alpha_db',
+    connectionString : process.env.DATABASE_URL,
+    ssl: true
   }
 });
 
