@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "atob": "^2.1.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
