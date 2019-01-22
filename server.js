@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const Chatkit = require('@pusher/chatkit-server')
+
 const knex = require('knex')({
   client: 'pg',
   connection: {
@@ -10,7 +12,10 @@ const knex = require('knex')({
   }
 });
 
-
+const chatkit = new Chatkit.default({
+ instanceLocator: process.env.CK_INSTANCE_LOCATOR,
+  key: process.env.CK_KEY,
+})
 const app = express();
 
 
@@ -93,7 +98,28 @@ app.get('/search', (req, res) => {
       })
 })
 
+app.post('/users', (req, res) => {
+  const { username } = req.body
+  chatkit
+   .createUser({
+      id: username,
+      name: username
+    })
+    .then(() => res.sendStatus(201))
+    .catch(error => {
+      if (error.error_type === 'services/chatkit/user_already_exists') {
+        res.sendStatus(200)
+      } else {
+        res.status(error.status).json(error)
+      }
+    })
 
+})
+
+app.post('/authenticate', (req, res) => {
+ const authData = chatkit.authenticate({ userId: req.query.user_id })
+  res.status(authData.status).send(authData.body)
+})
 
 
 app.listen(process.env.PORT || 3000, () => {

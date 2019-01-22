@@ -9,13 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pusher/chatkit-server": "^1.0.4",
     "atob": "^2.1.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "knex": "^0.14.4",
-    "nodemon": "^1.15.1",
+    "nodemon": "^1.18.9",
     "pg": "^7.4.1"
   }
 }
